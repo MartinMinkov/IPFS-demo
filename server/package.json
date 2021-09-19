@@ -1,0 +1,24 @@
+{
+    "name": "mina-archive-ipfs",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "server": "node server.js",
+        "create-tables": "node db/create-tables.js",
+        "clean": "rm -rf archives/*",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1",
+        "ipfs": "^0.58.4",
+        "it-all": "^1.0.5",
+        "moment": "^2.29.1",
+        "node-cron": "^3.0.0",
+        "pg": "^8.7.1",
+        "uint8arrays": "^3.0.0"
+    }
+}
