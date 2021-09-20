@@ -32,7 +32,7 @@ export default function Home({ archives }) {
                 {archive.timestamp}
               </p>
               <a
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-52"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-52 flex justify-center items-center"
                 href={`https://ipfs.io/ipfs/${archive.cid}?filename=mina_backup_${archive.cid}.sql.tar.gz`}
               >
                 Click to download
@@ -46,7 +46,7 @@ export default function Home({ archives }) {
 }
 
 export async function getStaticProps() {
-  const res = await axios.get("http://localhost:3001/archives");
+  const res = await axios.get("http://localhost:3001/api/archives");
   const archives = res.data;
   return {
     props: {

@@ -13,7 +13,7 @@ cron.schedule('0 18 * * *', async () => {
     await ipfs_cron.main()
 })
 
-app.get('/archives', (_req, res) => {
+app.get('/api/archives', (_req, res) => {
     pool.query('SELECT * FROM archives', [], (error, results) => {
         if (error) {
             throw error
