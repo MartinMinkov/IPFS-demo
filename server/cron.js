@@ -1,5 +1,3 @@
-const IPFS = require('ipfs')
-
 const moment = require('moment')
 const fs = require('fs')
 const https = require('https')
@@ -26,7 +24,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 //     console.log('File written!')
 // }
 
-const main = async () => {
+const main = async (node) => {
     const currentDate = moment(Date.now()).format('YYYY-MM-DD')
     const currentArchive = `mainnet-archive-dump-${currentDate}`
     const fullArchiveName = `${currentArchive}_0000.sql.tar.gz`
@@ -34,20 +32,24 @@ const main = async () => {
     const archiveURL = `https://storage.googleapis.com/mina-archive-dumps/${fullArchiveName}`
     const localDownloadPath = `${__dirname}/archives/${currentArchive}/${fullArchiveName}`
 
-    const node = await IPFS.create()
-
     const dir = `${__dirname}/archives/${currentArchive}`
+    console.log('Writing to dir, ', dir)
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir)
     }
+
     const downloadedArchive = fs.createWriteStream(localDownloadPath)
+    console.log('Downloading from: ', archiveURL)
     https.get(archiveURL, function (response) {
         response.pipe(downloadedArchive)
     })
 
-    await delay(5000)
+    console.log('Waiting for download (20 sec).')
+    await delay(20000)
+    console.log('Waiting done.')
 
     const source = fs.readFileSync(`${localDownloadPath}`)
+    console.log('Reading from: ', localDownloadPath)
     const file = await node.add({
         path: fullArchiveName,
         content: source,

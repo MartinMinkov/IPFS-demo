@@ -1,3 +1,4 @@
+const IPFS = require('ipfs')
 const cron = require('node-cron')
 const express = require('express')
 const ipfs_cron = require('./cron')
@@ -7,10 +8,15 @@ const pool = getPool()
 
 const app = express()
 
-// At 6PM everyday, run this cron job
-cron.schedule('0 18 * * *', async () => {
+let node
+;(async () => {
+    node = await IPFS.create()
+})()
+
+// Run every 6 hours
+cron.schedule('0 */6 * * *', async () => {
     console.log('running cron job')
-    await ipfs_cron.main()
+    await ipfs_cron.main(node)
 })
 
 app.get('/api/archives', (_req, res) => {
