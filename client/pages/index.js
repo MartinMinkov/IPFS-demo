@@ -20,15 +20,15 @@ export default function Home({ archives }) {
               className="cursor-pointer flex flex-col space-y-4 bg-light-black bg-opacity-25 hover:bg-opacity-20 px-20 py-16 rounded-md"
             >
               <p>
-                <span className="font-bold">CID:</span>
+                <span className="font-bold">CID: </span>
                 {archive.cid}
               </p>
               <p>
-                <span className="font-bold">Origin:</span>
+                <span className="font-bold">Origin: </span>
                 {archive.origin}
               </p>
               <p>
-                <span className="font-bold">Timestamp:</span>
+                <span className="font-bold">Timestamp: </span>
                 {archive.timestamp}
               </p>
               <a
@@ -45,7 +45,7 @@ export default function Home({ archives }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const res = await axios.get("http://localhost:3001/api/archives");
   const archives = res.data;
   return {
